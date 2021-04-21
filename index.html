@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>My Website</title>
+<meta charset="utf-8">
+
+<script>
+	function formatInput()
+	{
+		var input = document.getElementById("input").value;
+
+		//input = input.replace(/\s+/g, '');
+		input = input.replace(/[^a-zA-Z_]/g, '');
+		input = input.replace('_', '');
+		
+		
+
+		return input.toUpperCase();
+	}
+
+
+function encipher() {
+
+	var input = formatInput(document.getElementById("input").value);
+	var output = document.getElementById("output");
+
+	var mKey = parseInt(document.getElementById("multiplicative").value);
+	var aKey = parseInt(document.getElementById("additive").value);
+
+	if(mKey < 1 || mKey > 25)
+	{
+		window.alert("Multiplicative Key must be between 1 and 25");
+		return -1;
+	}
+
+	if(aKey < 0 || aKey > 25)
+	{
+		window.alert("Additive Key must be between 0 and 25");
+		return -1;
+	}
+
+	var result = "";
+
+	var mInverse = 0;
+
+	switch(mKey) {
+		case 1: 
+			mInverse = 1;
+			break;
+		case 3:
+			mInverse = 9;
+			break;
+		case 5:
+			mInverse = 21;
+			break;
+		case 7:
+			mInverse = 15;
+			break;
+		case 9:
+			mInverse = 3;
+			break;
+		case 11:
+			mInverse = 19;
+			break;
+		case 15:
+			mInverse = 7;
+			break;
+		case 17:
+			mInverse = 23;
+			break;
+		case 19:
+			mInverse = 11;
+			break;
+		case 21:
+			mInverse = 5;
+			break;
+		case 23:
+			mInverse = 17;
+			break;
+		case 25:
+			mInverse = 25;
+			break;
+		default:
+			return window.alert("Invalid Multiplicative Key");
+			return -1;
+		}
+
+
+	for(i = 0; i < input.length; i++)
+	{
+		var characterCode = input.charCodeAt(i) - 64;
+
+		characterCode = ((characterCode * mKey) + aKey) % 26;
+
+		if(characterCode == 0)
+		{
+			characterCode = 26;
+		}
+
+		result += String.fromCharCode(characterCode + 64);
+
+	}
+
+	printOutput(result);
+}
+
+function decipherFromCrib(mKey, aKey) {
+
+	var input = formatInput(document.getElementById("input").value);
+	var output = document.getElementById("output");
+
+
+	if(mKey < 1 || mKey > 25)
+	{
+		window.alert("Multiplicative Key must be between 1 and 25");
+		return -1;
+	}
+
+	if(aKey < 0 || aKey > 25)
+	{
+		window.alert("Additive Key must be between 0 and 25");
+		return -1;
+	}
+
+
+
+	var mInverse = 0;
+
+	switch(mKey) {
+		case 1: 
+			mInverse = 1;
+			break;
+		case 3:
+			mInverse = 9;
+			break;
+		case 5:
+			mInverse = 21;
+			break;
+		case 7:
+			mInverse = 15;
+			break;
+		case 9:
+			mInverse = 3;
+			break;
+		case 11:
+			mInverse = 19;
+			break;
+		case 15:
+			mInverse = 7;
+			break;
+		case 17:
+			mInverse = 23;
+			break;
+		case 19:
+			mInverse = 11;
+			break;
+		case 21:
+			mInverse = 5;
+			break;
+		case 23:
+			mInverse = 17;
+			break;
+		case 25:
+			mInverse = 25;
+			break;
+		default:
+			return window.alert("Invalid Multiplicative Key");
+			return -1;
+		}
+
+	var result = "";
+
+	for(i = 0; i < input.length; i++)
+	{
+		var characterCode = input.charCodeAt(i) - 64;
+
+		characterCode = ((characterCode + (26 - aKey)) * mInverse) % 26;
+
+		if(characterCode == 0)
+		{
+			characterCode = 26;
+		}
+
+		result += String.fromCharCode(characterCode + 64);
+
+	}
+
+	printOutput(result);
+}
+
+function decipher() {
+
+	var input = formatInput(document.getElementById("input").value);
+	var output = document.getElementById("output");
+
+	var mKey = parseInt(document.getElementById("multiplicative").value);
+	var aKey = parseInt(document.getElementById("additive").value);
+
+	if(mKey < 1 || mKey > 25)
+	{
+		window.alert("Multiplicative Key must be between 1 and 25");
+		return -1;
+	}
+
+	if(aKey < 0 || aKey > 25)
+	{
+		window.alert("Additive Key must be between 0 and 25");
+		return -1;
+	}
+
+
+	var mInverse = 0;
+
+	switch(mKey) {
+		case 1: 
+			mInverse = 1;
+			break;
+		case 3:
+			mInverse = 9;
+			break;
+		case 5:
+			mInverse = 21;
+			break;
+		case 7:
+			mInverse = 15;
+			break;
+		case 9:
+			mInverse = 3;
+			break;
+		case 11:
+			mInverse = 19;
+			break;
+		case 15:
+			mInverse = 7;
+			break;
+		case 17:
+			mInverse = 23;
+			break;
+		case 19:
+			mInverse = 11;
+			break;
+		case 21:
+			mInverse = 5;
+			break;
+		case 23:
+			mInverse = 17;
+			break;
+		case 25:
+			mInverse = 25;
+			break;
+		default:
+			window.alert("Invalid Multiplicative Key");
+			return -1;
+		}
+
+	var result = "";
+
+	for(i = 0; i < input.length; i++)
+	{
+		var characterCode = input.charCodeAt(i) - 64;
+
+		characterCode = ((characterCode + (26 - aKey)) * mInverse) % 26;
+
+		if(characterCode == 0)
+		{
+			characterCode = 26;
+		}
+
+		result += String.fromCharCode(characterCode + 64);
+
+	}
+
+	printOutput(result);
+}
+
+function cribEncipher(plaintext, multKey, addKey) {
+	
+
+	var cipher = "";
+       
+    plaintext = plaintext.replace(/[^a-zA-Z_]/g, '');
+	plaintext = plaintext.replace('_', '');
+    plaintext = plaintext.toUpperCase();
+
+	for(var i = 0; i < plaintext.length; i++) {
+
+		var codePlaintext = plaintext.charCodeAt(i) - 64;
+
+		codePlaintext = ((codePlaintext * multKey) + addKey) % 26;
+
+		if(codePlaintext == 0)
+		{
+			codePlaintext = 26;
+		}
+
+		cipher += String.fromCharCode(codePlaintext + 64);
+
+	}
+
+	return cipher;
+}
+
+function possibleCribs() {
+		
+	var cribKey = document.getElementById("crib").value;
+
+	if(cribKey == "") return alert("Must input crib you are searching for");
+
+	var input = formatInput(document.getElementById("input").value);
+
+	if(input == "") return alert("Must have ciphertext in the input");
+
+	
+
+	var totalEncipher = [];
+	var usedMultKeys = [];
+	var usedAddKeys = [];
+	var numOccurances = [];
+
+	var iter = 0;
+
+	var multiplier = 1;
+	var casear = 1; 
+
+	var myTable = "<button type=\"button\" onclick=\"showMainMenu()\">Back</button><br><table><tr>";
+
+
+	for (iter = 0; iter < 312; iter++) {
+		if(casear % 27 == 0) {
+			casear = 1;
+			multiplier = multiplier + 2;
+
+			if(multiplier == 13) {
+				multiplier = 15;
+			}
+		}
+				
+		totalEncipher[iter] = cribEncipher(cribKey, multiplier, casear);
+
+		usedAddKeys[iter] = casear;
+
+		usedMultKeys[iter] = multiplier;
+
+		let regexp = new RegExp(totalEncipher[iter], 'g');
+
+		var x = input.match(regexp) || [];
+
+		numOccurances[iter] = x.length;
+
+		casear++;
+	}
+
+	for(var i = 0; i < numOccurances.length; i++)
+	{
+		for(var j = 0; j<numOccurances.length - i - 1; j++)
+		{
+			if(numOccurances[j] < numOccurances[j+1])
+			{
+					var tempNumOccurances = numOccurances[j];
+                    numOccurances[j] = numOccurances[j+1];
+                    numOccurances[j+1] = tempNumOccurances;
+
+                    var tempTotalEncipher = totalEncipher[j];
+                    totalEncipher[j] = totalEncipher[j+1];
+                    totalEncipher[j+1] = tempTotalEncipher;
+
+                    var tempUsedAddKeys = usedAddKeys[j];
+                    usedAddKeys[j] = usedAddKeys[j+1];
+                    usedAddKeys[j+1] = tempUsedAddKeys;
+
+                    var tempUsedMultKeys = usedMultKeys[j];
+                    usedMultKeys[j] = usedMultKeys[j+1];
+                    usedMultKeys[j+1] = tempUsedMultKeys;
+			}
+		}
+	}
+
+
+	if(numOccurances.length == 0) return alert("This crib cannot appear in the cipher text for an Affine cipher");
+
+	myTable += "<th>Multiplicative Key</th>";
+	myTable += "<th>Additive Key</th>";
+	myTable	+= "<th>Cipher Text</th>";
+	myTable	+= "<th>Number of Occurances</th></tr>";
+
+	var myTableCheck = myTable;
+
+
+
+	if(cribKey != "") {
+		for(var i = 0; i < totalEncipher.length; i++) {
+				if(numOccurances[i] != 0) {
+				myTable += "<tr>";
+				myTable += "<td>" + usedMultKeys[i] + "</td>";
+				myTable += "<td>" + usedAddKeys[i] + "</td>";
+				myTable += "<td><button type=\"button\" onclick=\"decipherFromCrib(" + usedMultKeys[i] + ", " + usedAddKeys[i] + ")\">" + totalEncipher[i] + "</button></td>";
+				myTable += "<td>" + numOccurances[i] + "</td>";
+				myTable += "</tr>";
+			}
+
+			//<button type="button" onclick="encipher()">Encipher</button>
+		}
+	}
+
+	if(myTableCheck == myTable) return alert("The crib cannot appear in the cipher text if an affine cipher was used");
+
+	myTable += "</table>";
+
+	document.getElementById("cribtable").innerHTML = myTable;
+	showCribMenu();
+}
+
+function printOutput(input)
+	{
+		var output = document.getElementById("output");
+
+		for(i = 5; i < input.length; i = i+6)
+		{
+			input = input.substr(0, i) + " " + input.substr(i);
+		}
+
+		output.value = input;
+	}
+
+function showCribMenu() {
+	document.getElementById("rightcol").style.display='none' ;
+	document.getElementById("cribtable").style.display='block';
+
+
+
+}
+
+function showMainMenu() {
+	document.getElementById("cribtable").style.display='none' ;
+	document.getElementById("rightcol").style.display='block';
+}
+
+function swap(){
+	var output = document.getElementById("output");
+
+	var input = document.getElementById("input");
+
+	var temp = output.value;
+
+	output.value = input.value;
+
+	input.value = temp;
+}
+
+function clearInput()
+	{
+		document.getElementById("input").value = "";
+	}
+function clearOutput()
+	{
+		document.getElementById("output").value = "";
+	}
+
+function clearAll()
+	{
+		clearInput();
+		clearOutput();
+
+		document.getElementById("crib").value = "";
+
+		document.getElementById("additive").value = 0;
+
+		document.getElementById("multiplicative").value = 1;
+	}
+
+</script>
+
+<style>
+
+	html{
+		height: 100%;
+	}
+
+#rightcol { 
+
+		padding:30px;
+		padding-top: 5px;
+		margin-left: 60%;
+		width:20%;
+		min-width: 250px;
+        background-color: #B8CDD9;
+} 
+
+#rightcol h1{
+	text-align: center;
+}
+
+#io{
+	
+	margin-left: 5%;
+	float: left;
+	width: 50%;
+}
+
+#cribtable { 
+		padding-top: 30px;
+		margin-left: 60%;
+		width:35%;
+		min-width: 500px;
+        background-color: #B8CDD9;
+        display: none;
+} 
+
+#cribtable button{
+	width:20%;
+	margin-left: 10%;
+
+}
+
+#io textarea{
+	font-family: Courier New;
+	width: 100%;
+	color: #646E78;
+}
+
+#rightcol input{
+	float: right;
+
+}
+
+#cribs{
+	display: none;
+}
+
+
+body {
+	background-color: black;
+	height: 100%;
+	font-family: Courier New;
+	
+}
+
+#main {
+	background-color: #E1E3E6;
+	min-height: 70%;
+	padding: 5%;
+}
+
+h1   {
+		padding: 10px;
+	 }
+
+h3 {
+	padding-left: 10px;
+
+}
+
+button{
+	font-family: Courier New;
+	padding-top: 30px;
+	padding: 5px;
+	width:48%;
+	margin-bottom: 10px;
+	background-color: #45a8ff;
+	color: white;
+	font-weight: bold;
+	border-radius: 20px;
+}
+
+td button{
+	background-color: orange;
+	min-width: 50px;
+	width: 100%;
+}
+
+input{
+	border-radius: 20px;
+	
+	width: 45%;
+}
+
+
+
+#encipher
+{
+	float: left;
+}
+
+#decipher
+{
+	float: right;
+}
+
+#cribButton{
+}
+
+#crib{
+	float: left;
+	width: 45%;
+	padding: 5px;
+	
+}
+#swap
+{
+	margin-top: 10px;
+	width: auto;
+	font-size: 60px;
+}
+
+#clear{
+	width: 10%;
+}
+
+#clearAll{
+	width: 100%;
+}
+
+table {
+
+	margin-left: 10%;
+	
+	width: 80%;
+    border: groove;
+    color: #EAB464;
+    background-color: #646E78;
+}
+
+th, tr, td {
+    padding: 10px;
+    border-bottom: 1px solid #d3d3d3;
+}
+
+footer {
+	color: #FFFFFF;
+}
+
+header{
+	background-color: black;
+	color: white;
+	width: 100%;
+	padding: 0px;
+
+	margin: 0px;
+
+}
+
+</style>
+
+</head>
+
+
+
+<body>
+	<header> <h1>Cryptology</h1> <h3>Affine Cipher Tool</h3></header>
+	<div id= "main">
+	<div id= "mainmenu">
+	<div id = "io">
+		<h3>Input <button id = "clear" onclick = "clearInput()">Clear</button> </h3>
+		<textarea rows="8" id="input"></textarea>
+		<br>
+		<button id = "swap" onclick = "swap()"> &#8597;</button>
+		<br>
+	    <h3>Output <button id = "clear" onclick = "clearOutput()">Clear</button> </h3>
+	    <textarea rows="8" id="output"></textarea>
+	</div>
+
+	<div id = "rightcol">
+		<h1>Tools</h1>
+		
+		
+			<label for="additive">Additive:</label>
+			<input type="number" id="additive" min="0" max="25" value="0">
+			
+		
+
+		<br>
+		<!--<p>Multiplicative Shift 
+			<input type="number" id="tentacles" name="tentacles"min="0" max="25">
+		</p> -->
+		
+			<p>Multiplicative:
+			<!--<input type="number" list="possibleMultiplicativeKeys" autocomplete="off" id="multiplicative"> -->
+			<input type="number" id="multiplicative" min="1" max="25" value="1">
+		</p>
+		
+                                <!-- Multiplicative Numbers: 1, 3, 5, 7, 9, 11, 15, 17, 19, 21, 23, and 25 -->
+                                <datalist id="possibleMultiplicativeKeys">
+                                        <option value="1"></option>
+                                        <option value="3"></option>
+                                        <option value="5"></option>
+                                        <option value="7"></option>
+                                        <option value="9"></option>
+                                        <option value="11"></option>
+                                        <option value="15"></option>
+                                        <option value="17"></option>
+                                        <option value="19"></option>
+                                        <option value="21"></option>
+                                        <option value="23"></option>
+                                        <option value="25"></option>
+                                </datalist>
+
+        <br>
+
+     	<div>
+			<button id = "encipher" type="button" onclick="encipher()">Encipher</button>
+			
+			<button id = "decipher" type="button" onclick="decipher()">Decipher</button>
+		</div>
+
+		<br>
+
+		<div>
+
+
+		<input type="text" id="crib" name="crib">
+		<button type="button" onclick="possibleCribs()">Search for Crib</button>
+
+	</div>
+		
+		<button type = "button" id = "clearAll" onclick="clearAll()">Reset</button>
+
+	</div>
+
+</div>
+
+	
+			<div id = "cribtable">
+				<button type="button" onclick="showMainMenu()">Back</button>
+				<br>
+		    	<table id = "table">
+		        	<tr>
+		            	<th>Multiplicative Key</th>
+		                <th>Additive Key</th>
+		                <th>Cipher Text</th>
+		                <th>Number of Occurances</th>
+		            </tr>
+		        </table>
+		        
+		    </div>
+</div>
+
+</body>
+
+<footer>
+	<p>Created by Austin Paolucci and McKenzie Ledonne, 2021</p>
+</footer>
+</html>
